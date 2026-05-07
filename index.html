@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Сортировка мусора в Германии — шпаргалка</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #f4f6f8;
+    color: #1a1a1a;
+    padding: 24px;
+    line-height: 1.5;
+  }
+  .container { max-width: 1200px; margin: 0 auto; }
+  h1 {
+    font-size: 28px;
+    margin-bottom: 6px;
+    color: #1a1a1a;
+  }
+  .subtitle {
+    color: #5a6470;
+    margin-bottom: 24px;
+    font-size: 15px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 16px;
+  }
+  .bin {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border: 1px solid #e5e9ee;
+    display: flex;
+    flex-direction: column;
+  }
+  .bin-header {
+    padding: 16px 18px;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .bin-icon {
+    font-size: 28px;
+    line-height: 1;
+  }
+  .bin-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0;
+  }
+  .bin-subtitle {
+    font-size: 13px;
+    opacity: 0.92;
+    margin-top: 2px;
+  }
+  .bin-body {
+    padding: 14px 18px 18px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+  .yes { color: #2a9d4a; }
+  .no { color: #c93030; }
+  ul { list-style: none; padding: 0; }
+  li {
+    padding: 4px 0 4px 22px;
+    font-size: 14px;
+    position: relative;
+    color: #2c3440;
+  }
+  li.y::before {
+    content: "✓";
+    color: #2a9d4a;
+    font-weight: 700;
+    position: absolute;
+    left: 0;
+  }
+  li.n::before {
+    content: "✗";
+    color: #c93030;
+    font-weight: 700;
+    position: absolute;
+    left: 0;
+  }
+
+  /* Колоры баков */
+  .restmuell .bin-header   { background: linear-gradient(135deg, #4a4a4a, #2a2a2a); }
+  .biotonne  .bin-header   { background: linear-gradient(135deg, #8b5a2b, #5d3a14); }
+  .gelb      .bin-header   { background: linear-gradient(135deg, #f5c518, #d99e0a); color: #2a2200; }
+  .papier    .bin-header   { background: linear-gradient(135deg, #2563eb, #1e3a8a); }
+  .glas      .bin-header   { background: linear-gradient(135deg, #2d8659, #1d5a3c); }
+  .pfand     .bin-header   { background: linear-gradient(135deg, #d97706, #92400e); }
+  .sonder    .bin-header   { background: linear-gradient(135deg, #b91c1c, #7f1d1d); }
+  .sperr     .bin-header   { background: linear-gradient(135deg, #6b21a8, #3b0764); }
+
+  .glass-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .glass-pill {
+    flex: 1;
+    text-align: center;
+    padding: 8px 6px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .glass-white { background: #f0f0f0; color: #333; border: 1px solid #d0d0d0; }
+  .glass-brown { background: #6b3a14; color: white; }
+  .glass-green { background: #2d8659; color: white; }
+
+  .tip-box {
+    margin-top: 24px;
+    padding: 18px 20px;
+    background: #fffbe6;
+    border: 1px solid #f0d56b;
+    border-left: 4px solid #d4a91a;
+    border-radius: 8px;
+  }
+  .tip-box h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #6b4f00;
+  }
+  .tip-box ul {
+    padding-left: 18px;
+    list-style: disc;
+  }
+  .tip-box li {
+    padding: 3px 0;
+    font-size: 14px;
+  }
+  .tip-box li::before { content: none; }
+
+  .footer {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #e5e9ee;
+    font-size: 12px;
+    color: #8090a0;
+    text-align: center;
+  }
+
+  @media print {
+    body { background: white; padding: 0; }
+    .bin { break-inside: avoid; box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>♻️ Сортировка мусора в Германии</h1>
+  <p class="subtitle">Шпаргалка с конкретными примерами — что в какой бак</p>
+
+  <div class="grid">
+
+    <!-- BIOTONNE -->
+    <div class="bin biotonne">
+      <div class="bin-header">
+        <div class="bin-icon">🥬</div>
+        <div>
+          <div class="bin-title">Biotonne</div>
+          <div class="bin-subtitle">Коричневый бак · Органика</div>
+        </div>
+      </div>
+      <div class="bin-body">
+        <div>
+          <div class="section-label yes">МОЖНО</div>
+          <ul>
+            <li class="y">Очистки от овощей и фруктов (включая цитрусовые)</li>
+            <li class="y">Кофейная гуща и фильтры, чайные пакетики</li>
+            <li class="y">Скорлупа от яиц</li>
+            <li class="y">Остатки готовой еды, хлеб, рис, макароны</li>
+            <li class="y">Скошенная трава, листья, цветы, ветки</li>
+            <li class="y">Бумажная салфетка для упаковки мокрых отходов</li>
+          </ul>
+        </div>
+        <div>
+          <div class="section-label no">НЕЛЬЗЯ</div>
+          <ul>
+            <li class="n">«Биоразлагаемые» пакеты (даже с пометкой Bio!)</li>
+            <li class="n">Кошачий наполнитель, фекалии животных</li>
+            <li class="n">Пыль из пылесоса, пепел</li>
+            <li class="n">Подгузники, гигиенические средства</li>
+            <li class="n">Мясо/рыба — <i>зависит от коммуны, проверь у себя</i></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- GELBE TONNE -->
+    <div class="bin gelb">
+      <div class="bin-header">
+        <div class="bin-icon">📦</div>
+        <div>
+          <div class="bin-title">Gelber Sack / Gelbe Tonne</div>
+          <div class="bin-subtitle">Жёлтый · Только УПАКОВКА из пластика, металла, композитов</div>
+        </div>
+      </div>
+      <div class="bin-body">
+        <div>
+          <div class="section-label yes">МОЖНО</div>
+          <ul>
+            <li class="y">Йогуртовые стаканчики, упаковки от масла</li>
+            <li class="y">Пакеты от чипсов, конфет, заморозки</li>
+            <li class="y">Бутылки от шампуня, моющих средств (без Pfand)</li>
+            <li class="y">Пластиковые пакеты, плёнка, пузырчатая упаковка</li>
+            <li class="y">Tetra Pak (молоко, сок) — сложить пополам</li>
+            <li class="y">Консервные банки, банки от напитков (без Pfand)</li>
+            <li class="y">Алюминиевая фольга, крышки от йогуртов</li>
+            <li class="y">Пустые баллончики (дезодорант, спрей)</li>
+          </ul>
+        </div>
+        <div>
+          <div class="section-label no">НЕЛЬЗЯ</div>
+          <ul>
+            <li class="n">Сильно грязная упаковка с остатками еды → Restmüll</li>
+            <li class="n">Зубные щётки, ручки, игрушки <i>(это не упаковка!)</i></li>
+            <li class="n">Сломанные кастрюли, сковородки</li>
+            <li class="n">Подгузники (часто туда кидают — это ошибка!)</li>
+            <li class="n">Батарейки, электроника — опасность пожара!</li>
+            <li class="n">CD/DVD — на Wertstoffhof</li>
+          </ul>
+        </div>
+        <div style="font-size: 12px; color: #6b5a00; background: #fff8db; padding: 8px 10px; border-radius: 6px;">
+          💡 <b>Löffelrein</b> — упаковка должна быть «чистой как ложка»: мыть не надо, но крупных остатков еды быть не должно.
+        </div>
+      </div>
+    </div>
+
+    <!-- PAPIERTONNE -->
+    <div class="bin papier">
+      <div class="bin-header">
+        <div class="bin-icon">📰</div>
+        <div>
+          <div class="bin-title">Papiertonne</div>
+          <div class="bin-subtitle">Синий бак · Бумага и картон</div>
+        </div>
+      </div>
+      <div class="bin-body">
+        <div>
+          <div class="section-label yes">МОЖНО</div>
+          <ul>
+            <li class="y">Газеты, журналы, рекламные буклеты</li>
+            <li class="y">Тетради, книги (без обложки), писчая бумага</li>
+            <li class="y">Картонные коробки (сложить!), упаковка Amazon</li>
+            <li class="y">Картон от пиццы — <i>только если без жирных пятен</i></li>
+            <li class="y">Картонные коробки от заморозки (от пиццы, шпината)</li>
+            <li class="y">Картонные упаковки от яиц</li>
+            <li class="y">Подарочная бумага (без блёсток и фольги)</li>
+          </ul>
+        </div>
+        <div>
+          <div class="section-label no">НЕЛЬЗЯ</div>
+          <ul>
+            <li class="n">Использованные салфетки, бумажные полотенца</li>
+            <li class="n">Кассовые чеки (термобумага с химией!)</li>
+            <li class="n">Билеты, фотографии (покрытие)</li>
+            <li class="n">Бумага для выпечки, бутербродная бумага (покрытие)</li>
+            <li class="n">Обои</li>
+            <li class="n">Грязный картон от пиццы с жиром → Restmüll</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- GLASCONTAINER -->
+    <div class="bin glas">
+      <div class="bin-header">
+        <div class="bin-icon">🍾</div>
+        <div>
+          <div class="bin-title">Altglascontainer</div>
+          <div class="bin-subtitle">Контейнер во дворе · Стеклянная тара</div>
+        </div>
+      </div>
+      <div class="bin-body">
+        <div>
+          <div class="section-label yes">МОЖНО</div>
+          <ul>
+            <li class="y">Винные и пивные бутылки (без Pfand)</li>
+            <li class="y">Банки от варенья, мёда, овощей, соусов</li>
+            <li class="y">Стеклянные флаконы от косметики</li>
+            <li class="y">Бутылки от масла, уксуса</li>
+          </ul>
+        </div>
+        <div>
+          <div class="section-label no">НЕЛЬЗЯ</div>
+          <ul>
+            <li class="n">Питьевые стаканы, стеклянная посуда → Restmüll</li>
+            <li class="n">Зеркала, оконное стекло</li>
+            <li class="n">Лампочки, керамика, фарфор → Restmüll</li>
+          </ul>
+        </div>
+        <div style="font-size: 12px; color: #1d5a3c; background: #e6f4ec; padding: 8px 10px; border-radius: 6px;">
+          💡 Крышки откручивать и в <b>Gelbe Tonne</b>. Мыть не надо. Сдавать только с 7:00 до 20:00 будни (тишина по закону).
+        </div>
+      </div>
+    </div>
+
+    <!-- RESTMÜLL -->
+    <div class="bin restmuell">
+      <div class="bin-header">
+        <div class="bin-icon">🗑️</div>
+        <div>
+          <div class="bin-title">Restmüll</div>
+          <div class="bin-subtitle">Чёрный/серый бак · Что нельзя переработать</div>
+        </div>
+      </div>
+      <div class="bin-body">
+        <div>
+          <div class="section-label yes">СЮДА ИДЁТ</div>
+          <ul>
+            <li class="y"><b>Использованные салфетки и бумажные полотенца</b></li>
+            <li class="y"><b>Кассовые чеки</b> (термобумага с химией!)</li>
+            <li class="y"><b>Бумага для выпечки и бутербродная бумага</b> (с покрытием — не перерабатывается)</li>
+            <li class="y"><b>Грязный картон от пиццы с жирными пятнами</b> (если чистая верхняя крышка — её можно в Papier)</li>
+            <li class="y">Подгузники, гигиенические прокладки, ватные палочки</li>
+            <li class="y">Кошачий наполнитель, экскременты животных в пакете</li>
+            <li class="y">Содержимое пылесборника, пепел (остывший!)</li>
+            <li class="y">Окурки</li>
+            <li class="y">Разбитые стаканы, керамика, фарфор</li>
+            <li class="y">Лампы накаливания (не энергосберегающие!)</li>
+            <li class="y">Зубные щётки, ручки, расчёски</li>
+            <li class="y">Сломанные пластиковые игрушки (без электроники)</li>
+            <li class="y">Сильно грязная упаковка с остатками еды</li>
+            <li class="y">Старые лекарства (НЕ в унитаз!)</li>
+            <li class="y">Билеты, чеки, фотографии, обои</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- PFAND -->
+    <div class="bin pfand">
+      <div class="bin-header">
+        <div class="bin-icon">💰</div>
+        <div>
+          <div class="bin-title">Pfand</div>
+          <div class="bin-subtitle">Возврат в магазин · НЕ В МУСОР!</div>
+        </div>
+      </div>
+      <div class="bin-body">
+        <div>
+          <div class="section-label yes">ВЕРНУТЬ В АВТОМАТ</div>
+          <ul>
+            <li class="y">PET-бутылки от воды, газировки (0.25 € или 0.15 €)</li>
+            <li class="y">Алюминиевые банки от напитков (0.25 €)</li>
+            <li class="y">Пивные бутылки стеклянные (0.08 €)</li>
+            <li class="y">Многоразовые бутылки от воды/сока (0.15 €)</li>
+            <li class="y">Йогурт в стеклянных банках с Pfand (0.15 €)</li>
+            <li class="y">С 2022 — соки, молоко, вино (0.25 €)</li>
+          </ul>
+        </div>
+        <div style="font-size: 12px; color: #92400e; background: #fef3c7; padding: 8px 10px; border-radius: 6px;">
+          💡 Ищи на этикетке знак <b>«PFAND»</b> или значок стрелочки с бутылкой. Сдавать в любой супермаркет (Rewe, Aldi, Lidl, Edeka).
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="tip-box">
+    <h3>🎯 Главные правила, которые часто путают</h3>
+    <ul>
+      <li><b>Йогуртовый стаканчик с картонной обёрткой</b> — оторви картон отдельно (в Papier), стаканчик и крышку отдельно (в Gelbe Tonne). Иначе автомат не отсортирует.</li>
+      <li><b>Зубная щётка</b> — это НЕ упаковка → Restmüll (или Wertstofftonne, если есть в твоей коммуне).</li>
+      <li><b>Биопакеты</b> «kompostierbar» — НЕ в Biotonne! Они не успевают разложиться. → Restmüll.</li>
+      <li><b>Стекло-стакан разбился</b> — Restmüll, не Altglas (другой состав стекла).</li>
+      <li><b>Pizzakarton</b> с жирными пятнами — Restmüll. Чистая верхняя крышка — в Papier.</li>
+      <li><b>Лекарства</b> — в Германии в Restmüll, НЕ в унитаз и НЕ в раковину.</li>
+      <li><b>Не нужно мыть упаковку</b> до блеска — достаточно вытрясти/вытереть остатки («löffelrein»).</li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    Источники: verbraucherzentrale.de · muelltrennung-wirkt.de · BUND · Umweltbundesamt<br>
+    Местные правила могут отличаться — проверь на сайте <b>mags.de</b> (Mönchengladbach)
+  </div>
+
+</div>
+</body>
+</html>
